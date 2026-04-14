@@ -1,0 +1,164 @@
+/**
+ * nav.css
+ * -------
+ * Styling for the top navigation bar (Nav component).
+ * Includes the layout, branding, status indicators, and the "New Task" button.
+ */
+
+.app-navbar {
+    /* Keep navbar above the main content */
+    position: relative;
+    z-index: 1;
+
+    /* Flexbox layout to push brand to left and actions to right */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: min(100%, 1400px);
+    margin: 24px auto 0;
+    padding: 18px 36px;
+
+    /* Glassmorphism effect: transparent background with blur */
+    background: rgba(18, 21, 39, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    box-shadow: 0 22px 80px rgba(12, 14, 26, 0.35);
+    backdrop-filter: blur(18px);
+}
+
+/* Application title styling */
+.app-brand {
+    color: #f8fafc;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+/* Container for status pills and button */
+.app-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Individual status counter styling */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Colored dot inside status pill */
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.04);
+}
+
+/* Counter number inside status pill */
+.status-count {
+    min-width: 18px;
+    text-align: center;
+    /* Use tabular figures so numbers are aligned evenly */
+    font-feature-settings: 'tnum';
+}
+
+/* Specific colors for each status type */
+.to-do-count {
+    background: #3b82f6;
+    /* Blue */
+}
+
+.doing-count {
+    background: #fbbf24;
+    /* Yellow/Amber */
+}
+
+.done-count {
+    background: #34d399;
+    /* Green */
+}
+
+/* Modern gradient button for adding a new task */
+.new-task-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #5b6cf3, #8c6cfc);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+/* Hover effects for the add task button */
+.new-task-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(87, 96, 255, 0.25);
+}
+
+/* ── Responsive breakpoints ── */
+
+/* Tablet displays */
+@media (max-width: 900px) {
+    .app-navbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 18px 20px;
+    }
+
+    .app-navbar-actions {
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .status-pill {
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 0;
+    }
+
+    .new-task-button {
+        min-width: 160px;
+        padding: 11px 16px;
+    }
+}
+
+/* Mobile displays */
+@media (max-width: 620px) {
+    .app-navbar {
+        padding: 16px 16px;
+    }
+
+    .app-navbar-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .status-pill,
+    .new-task-button {
+        width: 100%;
+    }
+
+    .status-pill {
+        justify-content: center;
+    }
+}

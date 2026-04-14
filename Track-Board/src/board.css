@@ -1,0 +1,296 @@
+/**
+ * board.css
+ * ---------
+ * Styling for the Kanban board columns, responsive grid, drag-and-drop 
+ * interactions, and the individual task cards.
+ */
+
+/* ── Main Board Grid Layout ── */
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 20px auto 0;
+    width: 100%;
+    max-width: 1470px;
+    padding: 0 24px;
+}
+
+/* ── Board Columns ── */
+.board-column {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    padding: 24px;
+    background: rgba(18, 21, 39, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    transition: background 0.15s;
+}
+
+.board-column--dragover {
+    background: rgba(91, 108, 243, 0.07);
+    border-color: rgba(91, 108, 243, 0.25);
+}
+
+/* ── Column Headers & Status Indicators ── */
+.board-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.board-label-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.board-label-dot--todo {
+    background: #3b82f6;
+}
+
+.board-label-dot--doing {
+    background: #fbbf24;
+}
+
+.board-label-dot--done {
+    background: #34d399;
+}
+
+.board-cards-list {
+    flex: 1;
+}
+
+/* ── Empty State for Columns ── */
+.board-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 240px;
+    padding: 32px 18px;
+    color: #94a3b8;
+    border: 1px dashed rgba(148, 163, 184, 0.22);
+    border-radius: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.board-add-button {
+    margin-top: 18px;
+    padding: 12px 18px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    background: transparent;
+    color: #f8fafc;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.board-add-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* ── Task cards ── */
+.task-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: grab;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+/* Colored top accent per column */
+.task-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+}
+
+.task-card--todo::before {
+    background: #3b82f6;
+}
+
+.task-card--doing::before {
+    background: #fbbf24;
+}
+
+.task-card--done::before {
+    background: #34d399;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.task-card--dragging {
+    opacity: 0.45;
+    transform: scale(0.97);
+    cursor: grabbing;
+}
+
+.task-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.task-card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.task-card-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 18px;
+    padding: 0 0 0 8px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.task-card:hover .task-card-del {
+    opacity: 1;
+}
+
+.task-card-del:hover {
+    color: #f87171;
+}
+
+.task-card-desc {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.task-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ── Tags ── */
+.task-tag {
+    font-size: 0.7rem;
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.task-tag--blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+.task-tag--amber {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fcd34d;
+}
+
+.task-tag--green {
+    background: rgba(52, 211, 153, 0.15);
+    color: #6ee7b7;
+}
+
+.task-tag--purple {
+    background: rgba(167, 139, 250, 0.15);
+    color: #c4b5fd;
+}
+
+.task-tag--pink {
+    background: rgba(251, 113, 133, 0.15);
+    color: #fda4af;
+}
+
+/* ── Priority + Avatar ── */
+.task-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-priority {
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #64748b;
+}
+
+.task-priority-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.task-priority-dot--high {
+    background: #f87171;
+}
+
+.task-priority-dot--mid {
+    background: #fbbf24;
+}
+
+.task-priority-dot--low {
+    background: #34d399;
+}
+
+.task-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+    .board-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .board-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .board-column {
+        min-height: auto;
+    }
+}
