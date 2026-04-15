@@ -227,7 +227,7 @@ function EditModal({ card, onClose, onSave }) {
   return (
     <div
       className="modal-overlay"
-      {/* Removed onClick close — only Cancel button closes this modal */}
+
     >
       <div className="modal-box">
         <h3 className="modal-title">Edit Task</h3>
