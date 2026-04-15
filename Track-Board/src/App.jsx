@@ -227,7 +227,7 @@ function EditModal({ card, onClose, onSave }) {
   return (
     <div
       className="modal-overlay"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      {/* Removed onClick close — only Cancel button closes this modal */}
     >
       <div className="modal-box">
         <h3 className="modal-title">Edit Task</h3>
@@ -251,6 +251,7 @@ function EditModal({ card, onClose, onSave }) {
             rows={2}
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && e.ctrlKey && handleSave()}
           />
         </div>
 
@@ -280,6 +281,7 @@ function EditModal({ card, onClose, onSave }) {
             type="text"
             value={tag}
             onChange={(e) => setTag(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSave()}
           />
         </div>
 

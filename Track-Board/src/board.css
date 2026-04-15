@@ -203,13 +203,11 @@
     font-family: inherit;
     padding: 2px 6px;
     border-radius: 6px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.15s, color 0.15s, background 0.15s;
 }
 
-.task-card:hover .task-card-edit {
-    opacity: 1;
-}
+
 
 .task-card-edit:hover {
     color: #93c5fd;
