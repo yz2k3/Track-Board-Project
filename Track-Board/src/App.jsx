@@ -21,6 +21,9 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const [defaultStatus, setDefaultStatus] = useState('todo')
 
+  // editingCard holds the card object the user wants to edit (null = no edit open)
+  const [editingCard, setEditingCard] = useState(null)
+
   const countFor = (status) => cards.filter((c) => c.status === status).length
 
   function openModal(status = 'todo') {
@@ -41,6 +44,13 @@ function App() {
     )
   }
 
+  // editCard receives the updated card and replaces the old one in the list
+  function editCard(updatedCard) {
+    setCards((prev) =>
+      prev.map((c) => (c.id === updatedCard.id ? updatedCard : c))
+    )
+  }
+
 
   return (
     <div className="app-background">
@@ -57,6 +67,7 @@ function App() {
           onOpenModal={openModal}
           onDelete={deleteCard}
           onMove={moveCard}
+          onEdit={setEditingCard}
         />
       </main>
 
@@ -65,6 +76,18 @@ function App() {
           defaultStatus={defaultStatus}
           onClose={() => setModalOpen(false)}
           onAdd={addCard}
+        />
+      )}
+
+      {/* EditModal opens when user clicks the edit button on a card */}
+      {editingCard && (
+        <EditModal
+          card={editingCard}
+          onClose={() => setEditingCard(null)}
+          onSave={(updatedCard) => {
+            editCard(updatedCard)
+            setEditingCard(null)
+          }}
         />
       )}
     </div>
@@ -163,6 +186,106 @@ function TaskModal({ defaultStatus, onClose, onAdd }) {
         <div className="modal-btns">
           <button className="modal-btn-cancel" onClick={onClose}>Cancel</button>
           <button className="modal-btn-create" onClick={handleCreate}>Create Task</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * EditModal Component
+ * -------------------
+ * Opens pre-filled with the existing card data.
+ * User can change title, description, status, priority, and tag, then click Save.
+ */
+function EditModal({ card, onClose, onSave }) {
+  // Pre-fill every field with the card's current values
+  const [tagColor, tagLabel] = (card.tag || 'blue|Task').split('|')
+
+  const [title, setTitle] = useState(card.title)
+  const [desc, setDesc] = useState(card.desc)
+  const [status, setStatus] = useState(card.status)
+  const [priority, setPriority] = useState(card.priority)
+  const [tag, setTag] = useState(tagLabel)
+
+  function handleSave() {
+    if (!title.trim()) return
+    const label = tag.trim() || 'Task'
+    const color = pickColor(label)
+
+    // Build the updated card — keep the same id and av so nothing else changes
+    onSave({
+      ...card,
+      title: title.trim(),
+      desc: desc.trim(),
+      status,
+      priority,
+      tag: `${color}|${label}`,
+    })
+  }
+
+  return (
+    <div
+      className="modal-overlay"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="modal-box">
+        <h3 className="modal-title">Edit Task</h3>
+
+        <div className="modal-field">
+          <label className="modal-label">TITLE</label>
+          <input
+            className="modal-input"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSave()}
+            autoFocus
+          />
+        </div>
+
+        <div className="modal-field">
+          <label className="modal-label">DESCRIPTION</label>
+          <textarea
+            className="modal-input modal-textarea"
+            rows={2}
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        </div>
+
+        <div className="modal-row">
+          <div className="modal-field">
+            <label className="modal-label">STATUS</label>
+            <select className="modal-input" value={status} onChange={(e) => setStatus(e.target.value)}>
+              <option value="todo">To Do</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+          <div className="modal-field">
+            <label className="modal-label">PRIORITY</label>
+            <select className="modal-input" value={priority} onChange={(e) => setPriority(e.target.value)}>
+              <option value="high">High</option>
+              <option value="mid">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="modal-field">
+          <label className="modal-label">TAG</label>
+          <input
+            className="modal-input"
+            type="text"
+            value={tag}
+            onChange={(e) => setTag(e.target.value)}
+          />
+        </div>
+
+        <div className="modal-btns">
+          <button className="modal-btn-cancel" onClick={onClose}>Cancel</button>
+          <button className="modal-btn-create" onClick={handleSave}>Save Changes</button>
         </div>
       </div>
     </div>

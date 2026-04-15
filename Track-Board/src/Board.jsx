@@ -37,7 +37,8 @@ const COLUMNS = [
  * ---------------
  * Renders the columns and manages Drag-and-Drop state.
  */
-function Board({ cards, onOpenModal, onDelete, onMove }) {
+// `onEdit` is called when user clicks ✏ and passes the full card object up to App
+function Board({ cards, onOpenModal, onDelete, onMove, onEdit }) {
     // `draggingId` keeps track of the task currently being dragged
     const [draggingId, setDraggingId] = useState(null)
 
@@ -87,6 +88,7 @@ function Board({ cards, onOpenModal, onDelete, onMove }) {
                                         card={card}
                                         colId={col.id}
                                         onDelete={onDelete}
+                                        onEdit={onEdit}
                                         onDragStart={setDraggingId}
                                     />
                                 ))
@@ -111,7 +113,8 @@ function Board({ cards, onOpenModal, onDelete, onMove }) {
  * ------------------
  * A draggable card representing an individual task.
  */
-function TaskCard({ card, colId, onDelete, onDragStart }) {
+// Accept onEdit so we can call it when the ✏ button is clicked
+function TaskCard({ card, colId, onDelete, onEdit, onDragStart }) {
     // Visual flag when card is being dragged
     const [dragging, setDragging] = useState(false)
 
@@ -134,7 +137,12 @@ function TaskCard({ card, colId, onDelete, onDragStart }) {
         >
             <div className="task-card-top">
                 <span className="task-card-title">{card.title}</span>
-                <button className="task-card-del" onClick={() => onDelete(card.id)}>×</button>
+                <div className="task-card-actions">
+                    {/* ✏ Edit button — opens the EditModal with this card's data */}
+                    <button className="task-card-edit" onClick={() => onEdit(card)}>Edit</button>
+                    {/* × Delete button — removes the card permanently */}
+                    <button className="task-card-del" onClick={() => onDelete(card.id)}>×</button>
+                </div>
             </div>
 
             {card.desc && <p className="task-card-desc">{card.desc}</p>}
