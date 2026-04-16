@@ -200,7 +200,7 @@ function TaskModal({ defaultStatus, onClose, onAdd }) {
  */
 function EditModal({ card, onClose, onSave }) {
   // Pre-fill every field with the card's current values
-  const [tagColor, tagLabel] = (card.tag || 'blue|Task').split('|')
+  const [tagLabel] = (card.tag || 'blue|Task').split('|')
 
   const [title, setTitle] = useState(card.title)
   const [desc, setDesc] = useState(card.desc)
