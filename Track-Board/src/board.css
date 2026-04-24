@@ -316,9 +316,22 @@
 @media (max-width: 700px) {
     .board-grid {
         grid-template-columns: 1fr;
+        padding: 0 16px;
     }
 
     .board-column {
         min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .board-grid {
+        padding: 0 12px;
+        gap: 14px;
+    }
+
+    .board-column {
+        padding: 18px 16px;
+        border-radius: 20px;
     }
 }

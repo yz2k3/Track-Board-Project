@@ -71,6 +71,44 @@ function App() {
         />
       </main>
 
+      {/* ── Contact / Info Footer Section ── */}
+      <section className="contact-section">
+        {/* Email CTA card */}
+        <div className="contact-card">
+          <p className="contact-eyebrow">Get in touch</p>
+          <h2 className="contact-heading">
+            Drop me an email and <span>let's talk.</span>
+          </h2>
+          <a
+            href="mailto:micaeankun8903@gmail.com"
+            className="contact-email-btn"
+          >
+            micaeankun8903@gmail.com
+            <span className="arrow">→</span>
+          </a>
+        </div>
+
+        {/* 4-chip info grid */}
+        <div className="contact-info-grid">
+          <div className="info-card">
+            <p className="info-card-label">Full-time</p>
+            <p className="info-card-value gradient">Frontend Developer</p>
+          </div>
+          <div className="info-card">
+            <p className="info-card-label">Internship</p>
+            <p className="info-card-value gradient">React / UI</p>
+          </div>
+          <div className="info-card">
+            <p className="info-card-label">Freelance</p>
+            <p className="info-card-value">Web Projects</p>
+          </div>
+          <div className="info-card">
+            <p className="info-card-label">Status</p>
+            <p className="info-card-value">Remote-Ready / Time-zone friendly</p>
+          </div>
+        </div>
+      </section>
+
       {modalOpen && (
         <TaskModal
           defaultStatus={defaultStatus}
